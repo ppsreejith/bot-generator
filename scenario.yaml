@@ -1,0 +1,52 @@
+---
+include:
+  - intents.yml
+  - slots.yml
+  - tests.yml
+scenario:
+  name: 'acko query'
+  locale: 'en-US'
+  category: EDUCATION_AND_REFERENCE
+  invocation: 'acko query'
+  examplePhrases:
+    - 'Alexa, open acko query'
+  steps:
+  
+    - name: InitialStep
+      actions:
+        - sendText: 'Hiya. Welcome to acko query! I can help you answer queries and upload claims.'
+        - getInput:
+      next:
+        AMAZON.CancelIntent: Exit
+        AMAZON.StopIntent: Exit
+        AMAZON.HelpIntent: Help
+        coverage_question: AskCoverageQuestion
+    
+    - name: ContinueStep
+      actions:
+        - sendText: 'Do you have any other queries or upload claims.'
+        - getInput:
+      next:
+        AMAZON.CancelIntent: Exit
+        AMAZON.StopIntent: Exit
+        AMAZON.HelpIntent: Help
+        coverage_question: AskCoverageQuestion
+    
+    - name: AskCoverageQuestion
+      actions:
+        - sendText: "You're asking whether {{ calamity }} is covered?"
+      next: 
+        response_yes: ContinueStep
+    
+    - name: Exit
+      entrypoint: true
+      actions: 
+        - sendText: 'Bye! Take care!' 
+        
+    - name: Help
+      entrypoint: true
+      actions:
+        - sendText: 'I can help you answer queries and upload claims.'
+        - getInput: 
+      next: 
+        response_yes: InitialStep 

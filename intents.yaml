@@ -1,0 +1,13 @@
+---
+intents:
+  response_yes:
+    - 'OK'
+    - 'Great'
+    - 'Yep'
+  response_no:
+    - 'No'
+    - 'nope'
+    
+  coverage_question:
+    - 'Are {calamity} covered'
+    - 'My car hit a {calamity}'
